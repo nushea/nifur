@@ -2,5 +2,5 @@ all:
 	rm nifur || true
 	gcc -o nifur main.c
 
-run: all
-	REQUEST_URI="subdomain.example.com/path/to/thing" ./nifur
+test: all
+	SERVER_NAME="subdomain.example.com" REQUEST_URI="/path/to/thing" ./nifur
