@@ -32,6 +32,10 @@ int colmap(int color){
 }
 
 void ansii(int posX, int posY, int bg, int fg, char * output){ //{{{
+	if(strlen(output)>=BUFFER){
+		printf("\x1b[1;1H\x1b[107;40mOverflowing\n");
+		return;
+	}
 	if(isTrueColor){
 		if(bg > 0xFFFFFF)
 			bg=0xFFFFFF;
