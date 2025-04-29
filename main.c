@@ -31,42 +31,69 @@ int colmap(int color){
 	return 0;
 }
 
-void ansii(int posX, int posY, int bg, int fg, char * output){ //{{{
+void ansi(int posX, int posY, int bg, int fg, char * output){ //{{{
 	if(strlen(output)>=BUFFER){
 		printf("\x1b[1;1H\x1b[107;40mOverflowing\n");
 		return;
 	}
-	if(isTrueColor){
 		if(bg > 0xFFFFFF)
 			bg=0xFFFFFF;
 		if(fg > 0xFFFFFF)
 			fg=0xFFFFFF;
 		if(bg < 0)
 			bg = colmap(bg);
-		if(fg < 0)
+		if(fg < 0){
 			fg = colmap(bg);
+		}
 		char * oup;
 		oup = malloc(BUFFER);
 		memset(oup, 0, BUFFER);
 		if(bg > -1)
-			sprintf(oup, "\x1b[0m\x1b[%i;%iH\x1b[38;2;%i;%i;%i;48;2;%i;%i;%im%s\x1b[0m", posY, posX, fg/0x10000, (fg/0x100)%0x100, fg%0x100, bg/0x10000, (bg/0x100)%0x100, bg%0x100, output);
+			sprintf(oup, "\x1b[%i;%iH\x1b[38;2;%i;%i;%i;48;2;%i;%i;%im%s\x1b[0m", posY, posX, fg/0x10000, (fg/0x100)%0x100, fg%0x100, bg/0x10000, (bg/0x100)%0x100, bg%0x100, output);
 		printf("%s", oup);
 		free(oup);
+	
+} //}}}
+void dots(int posX, int posY, int bg, int fg, char * output){ //{{{
+	if(strlen(output)>=BUFFER){
+		printf("\x1b[1;1H\x1b[107;40mOverflowing\n");
+		return;
 	}
-	else{
-		if(bg < 0)
-			bg = colmap(bg);
-		if(fg < 0)
-			fg = colmap(bg);
-		char * oup;
-		oup = malloc(BUFFER);
-    	memset(oup, 0, BUFFER);
-		sprintf(oup, "\x1b[0m\x1b[%i;%iH\x1b[%i;%im%s\x1b[0m", posY, posX, fg, bg, output);
-		printf("%s", oup);
-		free(oup);
-	}
+	if(bg < 0)
+		bg = colmap(bg);
+	if(fg < 0)
+		fg = colmap(bg);
+	char * oup;
+	oup = malloc(BUFFER);
+    memset(oup, 0, BUFFER);
+	sprintf(oup, "\x1b[%i;%iH\x1b[%i;%im%s\x1b[0m", posY, posX, fg, bg, output);
+	printf("%s", oup);
+	free(oup);
+		
 } //}}}
 
+void trueColorInit(){//{{{
+	for(int i=1; i<=HEIGH; i++)
+		for(int j=1; j<=WIDTH; j++)
+			if((i+j)%2)
+				ansi(j, i, -1, 0xb4befe, " ");
+			else
+			 	ansi(j, i, -1, 0x45475a, " ");
+	ansi(1,1, colBG, colFG, "curl?? :3\n");
+	printf("\x1b[%i;%iH\x1b[0\n", HEIGH, WIDTH+1);
+
+}//}}}
+
+void simlColorInit(){ //{{{
+	for(int i=1; i<=HEIGH; i++)
+		for(int j=1; j<=WIDTH; j++)
+			if((i+j)%2)
+				dots(j, i, -1, 91, " ");
+			else
+			 	dots(j, i, -1, 92, " ");
+	dots(1,1, colBG, colFG, "curl?? :3\n");
+	printf("\x1b[%i;%iH\x1b[0\n", HEIGH, WIDTH+1);
+} //}}}
 
 int main(){
 	//{{{ Pre-reqs
@@ -91,7 +118,10 @@ int main(){
 		return 0;
 	}
 	printf("\x1b[2J");
-	ansii(1,1, colBG, colFG, "curl?? :3\n");
+	if(isTrueColor)
+		trueColorInit();
+	else
+	 	simlColorInit();
 //	printf("truecol=%i\n", isTrueColor);
 }
 
