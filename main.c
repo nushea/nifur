@@ -70,7 +70,7 @@ int main(){
 }
 
 void debug(){//{{{	
-	char debugstring[BUFFER];
+	char debugstring[BUFFER*4];
 	sprintf(debugstring, "Domain: %s%s\nYer ip is: %s", host,uri, ip);
 	ansi(1, HEIGH-2, colBG, colFG, debugstring);
 }//}}}
