@@ -2,7 +2,7 @@
 #define PRINTERSC
 
 
-#define BUFFER 0x400
+#define BUFFER 0x1000
 #define WIDTH 80
 #define HEIGH 24
 

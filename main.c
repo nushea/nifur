@@ -60,21 +60,17 @@ int main(){
 	strncpy(ip, getenv("REMOTE_ADDR"), BUFFER); ip[BUFFER-1] = '\0';
 	isTrueColor = 1;
 
-	if(!(strncmp(uri, "/simpl", 7))){
+	if(!(strncmp(uri, "/simpl", 7))||!(strncmp(uri, "/s/", 3))){
 		isTrueColor = 0;
 	}
 	//}}}
 
 	initProc();
-	if(!(strncmp(uri, "/debug", 7))){
-		debug();
-		return 0;
-	}
-//	printf("truecol=%i\n", isTrueColor);
+	if(!(strncmp(uri, "/debug", 7))){ debug(); return 0;}
 }
 
-void debug(){	
+void debug(){//{{{	
 	char debugstring[BUFFER];
 	sprintf(debugstring, "Domain: %s%s\nYer ip is: %s", host,uri, ip);
 	ansi(1, HEIGH-2, colBG, colFG, debugstring);
-}
+}//}}}
