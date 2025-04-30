@@ -4,6 +4,8 @@ all:
 
 test: all
 	SERVER_NAME="she-a.eu" REQUEST_URI="/path/subpath" REMOTE_ADDR="127.0.0.1" ./nifur
+test-basic: all
+	SERVER_NAME="she-a.eu" REQUEST_URI="/" REMOTE_ADDR="127.0.0.1" ./nifur
 test-simple: all
 	SERVER_NAME="she-a.eu" REQUEST_URI="/simpl" REMOTE_ADDR="127.0.0.1" ./nifur
 test-debug: all
