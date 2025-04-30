@@ -65,14 +65,16 @@ int main(){
 	}
 	//}}}
 
+	initProc();
 	if(!(strncmp(uri, "/debug", 7))){
 		debug();
 		return 0;
 	}
-	initProc();
 //	printf("truecol=%i\n", isTrueColor);
 }
 
 void debug(){	
-	printf("Domain: %s%s\nYer ip is: %s\n", host,uri, ip);
+	char debugstring[BUFFER];
+	sprintf(debugstring, "Domain: %s%s\nYer ip is: %s", host,uri, ip);
+	ansi(1, HEIGH-2, colBG, colFG, debugstring);
 }
