@@ -11,15 +11,38 @@ int colmap(int color){ //{{{
 			case  -1: return 0x1e1e2e;
 			case  -2: return 0xcdd6f4;
 			case  -3: return 0x313244;
-			case -32: return 0xa6e3a1;
+			case  -4: return 0x13131e;
+
+			case  -30: case  -40: return 0x000000;
+			case  -31: case  -41: return 0xFF0000;
+			case  -32: case  -42: return 0x00FF00;
+			case  -33: case  -43: return 0xFFFF00;
+			case  -34: case  -44: return 0x0000FF;
+			case  -35: case  -45: return 0xFF00FF;
+			case  -36: case  -46: return 0x00FFFF;
+			case  -37: case  -47: return 0xCCCCCC;
+			case  -90: case -100: return 0x888888;
+			case  -91: case -101: return 0xFF8888;
+			case  -92: case -102: return 0x88FF88;
+			case  -93: case -103: return 0xFFFF88;
+			case  -94: case -104: return 0x8888FF;
+			case  -95: case -105: return 0xFF88FF;
+			case  -96: case -106: return 0x88FFFF;
+			case  -97: case -107: return 0xFFFFFF;
+
 			default:  return 0xffffff;
 		}
 	}else{
+		color = -color;
+		if((color >= 30 && color <= 37)||(color >= 40 && color <= 47)||(color >= 90 && color <= 97)||(color >= 100 && color <= 107))
+			return color;
+		color = -color;
 		switch(color){
-			case  -1: return 40;
-			case  -2: return 97;
-			case  -3: return 40;
-			case -32: return 32;
+			case   -3:
+			case   -1: return 40;
+			case   -2: return 97;
+			case   -4: return 90;
+
 			default:  return 107;
 		}
 	}

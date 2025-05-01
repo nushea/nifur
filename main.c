@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-void debug();
 
 char uri[BUFFER], host[BUFFER], ip[BUFFER], * modifiedURI, * modifiedURIp;
 int ranPage = 0;
 
+//{{{ Initialization process
 void trueColorInit(){//{{{
 	for(int i=1; i<=HEIGH; i++)
 		for(int j=1; j<=WIDTH; j++)
@@ -47,19 +47,21 @@ void initProc(){ //{{{ The default displaying present on every page
 	ansi(WIDTH-20,1,colBG, colFG, "(minimum size: 80x24)");
 	printf("\x1b[%i;%iH\x1b[0\n", HEIGH, WIDTH+1);
 }//}}}
+//}}}
 
-void indexCard(int posX, int posY, int sizX, int sizY, int bg, int fg){ //{{{
+//{{{ Objects that can be drawn
+void indexCard(int posX, int posY, int sizX, int sizY, int bg, int earBG, int fg){ //{{{
 	if(sizX < 20 || sizY < 6 || sizX+posX > 80 || sizY+posY > 24){
 		ansi(posX, posY, colBG, colFG, "indexCard sizes X:20-80 Y:7-24");
 		return;}
 
 	if(isTrueColor){ //{{{
-		ansi(posX+ 5,posY+ 0, colBG,   fg,      "▄▄▄▄");
-		ansi(posX+ 2,posY+ 1, colBG,   fg,   "▄▟▀▀  ▝▌");
+		ansi(posX+ 5,posY+ 0, earBG,   fg,      "▄▄▄▄");
+		ansi(posX+ 2,posY+ 1, earBG,   fg,   "▄▟▀▀  ▝▌");
 		ansi(posX+ 4,posY+ 1,    bg,   fg,     "▀▀  ▝");
-		ansi(posX   ,posY+ 2, colBG,   fg, "▗▛▘  ──┐ ▙");
+		ansi(posX   ,posY+ 2, earBG,   fg, "▗▛▘  ──┐ ▙");
 		ansi(posX+ 1,posY+ 2,    bg,   fg,  "▛▘  ──┐ ");
-		ansi(posX   ,posY+ 3, colBG,   fg, "▟");
+		ansi(posX   ,posY+ 3, earBG,   fg, "▟");
 
 		int overSize = 20;
 		char over[BUFFER];
@@ -69,18 +71,19 @@ void indexCard(int posX, int posY, int sizX, int sizY, int bg, int fg){ //{{{
 			strcat(over, "▄");
 			overSize+=1;
 		}
-		ansi(posX+overSize- 8,posY + 0, colBG, fg, "▄▄▄▄");
-		ansi(posX+overSize- 9,posY + 1, colBG, fg,"▐▘  ▀▀▙▄");
+		ansi(posX+overSize- 8,posY + 0, earBG, fg, "▄▄▄▄");
+		ansi(posX+overSize- 9,posY + 1, earBG, fg,"▐▘  ▀▀▙▄");
 		ansi(posX+overSize- 8,posY + 1,    bg, fg, "▘  ▀▀");
-		ansi(posX+overSize- 9,posY + 2, colBG, fg,"▟ ┌──  ▝▜▖");
+		ansi(posX+overSize- 9,posY + 2, earBG, fg,"▟ ┌──  ▝▜▖");
 		ansi(posX+overSize- 8,posY + 2,    bg, fg," ┌──  ▝▜");
-		ansi(posX+overSize   ,posY + 3, colBG, fg,        "▙");
+		ansi(posX+overSize   ,posY + 3, earBG, fg,        "▙");
 
-		ansi(posX+10,posY+ 2, colBG,   fg, over);
+		ansi(posX+10,posY+ 2, earBG,   fg, over);
 
 		int ofy = 3;
 		char background[80];
 		memset(background, ' ', sizX-1);
+		background[sizX-1] = '\0';
 		while(ofy < sizY-1){	
 			ansi(posX+1, posY+ofy, bg,   fg, background);
 			ofy+=1;
@@ -272,13 +275,118 @@ void activeBox(int posX, int posY, int sizX, int sizY, int bg, int fg){//{{{
 
 }//}}}
 
+void shoru(int posX, int posY, int bg,int fg){//{{{
+	if(posX > 50 || posY > 8){
+		ansi(posX, posY, colBG,colFG,"OOBing it :c");
+		return;
+	}
+	if(isTrueColor){ //{{{	
+		ansi(posX+15, posY    ,  bg, fg,                "█");
+		ansi(posX+14, posY + 1,  bg, fg,               "▄▀▄");
+		ansi(posX+14, posY + 2, -41, fg,               "█ █");
+		ansi(posX+13, posY + 3, -41, fg,              "█   █");
+		ansi(posX+ 6, posY + 4,  bg, fg,       "▝▀█▜▄▄▄▀   ▀▄▄▄▛█▀▘");
+		ansi(posX+ 8, posY + 5,  bg, fg,         "▀▄   ▀▀▄▀▀   ▄▀");
+		ansi(posX+ 6, posY + 6,  bg, fg,       "▗▄▄█     █     █▄▄▖");
+		ansi(posX   , posY + 7,  bg, fg, "▗▄▄▛▀▀▘   ▀▄▄▄▄█▄▄▄▄▀   ▝▀▀▜▄▄▖");
+		ansi(posX   , posY + 8,  bg, fg, "▝▀▀▙▄▄▖   ▄▀▀▀▀█▀▀▀▀▄   ▗▄▄▟▀▀▘");
+		ansi(posX+ 6, posY + 9,  bg, fg,       "▝▀▀█     █     █▀▀▘");
+		ansi(posX+ 8, posY +10,  bg, fg,         "▄▀   ▄▄▀▄▄   ▀▄");
+		ansi(posX+ 6, posY +11,  bg, fg,       "▗▄█▟▀▀▀▄   ▄▀▀▀▙█▄▖");
+		ansi(posX+13, posY +12, -44, fg,              "█   █");
+		ansi(posX+14, posY +13, -44, fg,               "█ █");
+		ansi(posX+14, posY +14,  bg, fg,               "▀▄▀");
+		ansi(posX+15, posY +15,  bg, fg,                "█");
+
+		ansi(posX+15, posY + 1, -41, fg, "▀");
+		ansi(posX+13, posY + 4, -41, fg, "▀   ▀");
+		ansi(posX+15, posY + 5, -41, fg, "▄");
+		ansi(posX+15, posY +10, -44, fg, "▀");
+		ansi(posX+13, posY +11, -44, fg, "▄   ▄");
+		ansi(posX+15, posY +14, -44, fg, "▄");
+		ansi(posX+ 3, posY + 7, -42, fg, "▛▀▀▘   ▀");
+		ansi(posX+ 3, posY + 8, -42, fg, "▙▄▄▖   ▄");
+		ansi(posX+20, posY + 7, -43, fg, "▀   ▝▀▀▜");
+		ansi(posX+20, posY + 8, -43, fg, "▄   ▗▄▄▟");
+		ansi(posX+ 9, posY + 4,-103, fg, "▜");
+		ansi(posX+ 9, posY + 5,-103, fg, "▄   ▀▀");
+		ansi(posX+ 9, posY + 6,-103, fg, "█     ");
+		ansi(posX+11, posY + 7,-103, fg, "▄▄▄▄");
+		ansi(posX+21, posY + 4,-104, fg, "▛");
+		ansi(posX+16, posY + 5,-104, fg, "▀▀   ▄");
+		ansi(posX+16, posY + 6,-104, fg, "     █");
+		ansi(posX+16, posY + 7,-104, fg, "▄▄▄▄");
+		ansi(posX+11, posY + 8,-101, fg, "▀▀▀▀");
+		ansi(posX+ 9, posY + 9,-101, fg, "█     ");
+		ansi(posX+ 9, posY +10,-101, fg, "▀   ▄▄");
+		ansi(posX+ 9, posY +11,-101, fg, "▟");
+		ansi(posX+16, posY + 8,-102, fg, "▀▀▀▀");
+		ansi(posX+16, posY + 9,-102, fg, "     ");
+		ansi(posX+16, posY +10,-102, fg, "▄▄   ▀");
+		ansi(posX+21, posY +11,-102, fg, "▙");
+	} //}}}
+	else{ //{{{ Basic colors
+
+		ansi(posX+15,posY+ 0, bg, fg,                "█");
+		ansi(posX+14,posY+ 1, bg, fg,               "▄▀▄");
+		ansi(posX+14,posY+ 2,-41, fg,               "█ █");
+		ansi(posX+13,posY+ 3,-41, fg,              "█   █");
+		ansi(posX+ 7,posY+ 4, bg, fg,        "▀██▄▄▄▀   ▀▄▄▄██▀");
+		ansi(posX+ 8,posY+ 5, bg, fg,         "▀▄   ▀▀▄▀▀   ▄▀");
+		ansi(posX+ 7,posY+ 6, bg, fg,        "▄▄█     █     █▄▄");
+		ansi(posX+ 1,posY+ 7, bg, fg,  "▄▄█▀▀▀   ▀▄▄▄▄█▄▄▄▄▀   ▀▀▀█▄▄");
+		ansi(posX+ 1,posY+ 8, bg, fg,  "▀▀█▄▄▄   ▄▀▀▀▀█▀▀▀▀▄   ▄▄▄█▀▀");
+		ansi(posX+ 7,posY+ 9, bg, fg,        "▀▀█     █     █▀▀");
+		ansi(posX+ 8,posY+10, bg, fg,         "▄▀   ▄▄▀▄▄   ▀▄");
+		ansi(posX+ 7,posY+11, bg, fg,        "▄██▀▀▀▄   ▄▀▀▀██▄");
+		ansi(posX+13,posY+12,-44, fg,              "█   █");
+		ansi(posX+14,posY+13,-44, fg,               "█ █");
+		ansi(posX+14,posY+14, bg, fg,               "▀▄▀");
+	    ansi(posX+15,posY+15, bg, fg,                "█");
+
+		ansi(posX+15, posY + 1, -41, fg, "▀");
+		ansi(posX+13, posY + 4, -41, fg, "▀   ▀");
+		ansi(posX+15, posY + 5, -41, fg, "▄");
+		ansi(posX+15, posY +10, -44, fg, "▀");
+		ansi(posX+13, posY +11, -44, fg, "▄   ▄");
+		ansi(posX+15, posY +14, -44, fg, "▄");
+		ansi(posX+ 3, posY + 7, -42, fg, "█▀▀▀   ▀");
+		ansi(posX+ 3, posY + 8, -42, fg, "█▄▄▄   ▄");
+		ansi(posX+20, posY + 7, -43, fg, "▀   ▀▀▀█");
+		ansi(posX+20, posY + 8, -43, fg, "▄   ▄▄▄█");
+		ansi(posX+ 9, posY + 5,-103, fg, "▄   ▀▀");
+		ansi(posX+ 9, posY + 6,-103, fg, "█     ");
+		ansi(posX+11, posY + 7,-103, fg, "▄▄▄▄");
+		ansi(posX+16, posY + 5,-106, fg, "▀▀   ▄");
+		ansi(posX+16, posY + 6,-106, fg, "     █");
+		ansi(posX+16, posY + 7,-106, fg, "▄▄▄▄");
+		ansi(posX+11, posY + 8,-101, fg, "▀▀▀▀");
+		ansi(posX+ 9, posY + 9,-101, fg, "█     ");
+		ansi(posX+ 9, posY +10,-101, fg, "▀   ▄▄");
+		ansi(posX+16, posY + 8,-102, fg, "▀▀▀▀");
+		ansi(posX+16, posY + 9,-102, fg, "     ");
+		ansi(posX+16, posY +10,-102, fg, "▄▄   ▀");
+	} //}}}
+}//}}}
+//}}}
+
+//{{{ Page Displays
 void basicPage(){ //{{{
-//	ansi(2, 2, colBG, colFG, "basic page");
-	indexCard( 3, 3, 30, 21, -3, colFG);
-	//activeBox( 1, 3, 80, 21, -3, colFG);
+	ansi(2, 2, colBG, colFG, "basic page");
+	activeBox(20, 4, 60, 16, -3, colFG);
+	shoru(1, 3, colBG, -4);
+	indexCard( 26, 14, 24, 10, -3, -3, colFG);
 	
 	ranPage = 1;
 } //}}}
+
+void debug(){//{{{	
+	char debugstring[BUFFER*4];
+	sprintf(debugstring, "Domain: %s%s\nYer ip is: %s", host,uri, ip);
+	ansi(1, HEIGH-2, colBG, colFG, debugstring);
+	ranPage = 1;
+}//}}}
+//}}}
 
 int main(){ //{{{
 	//{{{ Pre-reqs
@@ -344,9 +452,3 @@ int main(){ //{{{
 	free(modifiedURI);
 }//}}}
 
-void debug(){//{{{	
-	char debugstring[BUFFER*4];
-	sprintf(debugstring, "Domain: %s%s\nYer ip is: %s", host,uri, ip);
-	ansi(1, HEIGH-2, colBG, colFG, debugstring);
-	ranPage = 1;
-}//}}}
