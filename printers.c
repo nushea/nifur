@@ -8,15 +8,19 @@ int isTrueColor = 0;
 int colmap(int color){ //{{{
 	if(isTrueColor){
 		switch(color){
-			case -1: return 0x1e1e2e;
-			case -2: return 0xcdd6f4;
-			default: return 0xffffff;
+			case  -1: return 0x1e1e2e;
+			case  -2: return 0xcdd6f4;
+			case  -3: return 0x313244;
+			case -32: return 0xa6e3a1;
+			default:  return 0xffffff;
 		}
 	}else{
 		switch(color){
-			case -1: return 40;
-			case -2: return 97;
-			default: return 107;
+			case  -1: return 40;
+			case  -2: return 97;
+			case  -3: return 40;
+			case -32: return 32;
+			default:  return 107;
 		}
 	}
 	return 0;
@@ -41,7 +45,7 @@ void truc(int posX, int posY, int bg, int fg, char * output){ //{{{
 		if(bg < 0)
 			bg = colmap(bg);
 		if(fg < 0){
-			fg = colmap(bg);
+			fg = colmap(fg);
 		}
 		char * oup;
 		oup = malloc(BUFFER);
@@ -61,7 +65,7 @@ void dots(int posX, int posY, int bg, int fg, char * output){ //{{{
 	if(bg < 0)
 		bg = colmap(bg);
 	if(fg < 0)
-		fg = colmap(bg);
+		fg = colmap(fg);
 	char * oup;
 	oup = malloc(BUFFER);
     memset(oup, 0, BUFFER);
