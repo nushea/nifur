@@ -152,6 +152,7 @@ void indexCard(int posX, int posY, int sizX, int sizY, int bg, int earBG, int fg
 		ansi(posX+3, posY+sizY-2, bg,   fg, background);
 		background[sizX-2] = 0;
 		memset(background, ' ', sizX-1);
+		background[sizX-1] = 0;
 		while(ows < sizY-2){	
 			ansi(posX+1, posY+ows, bg,   fg, background);
 			ows+=1;
@@ -389,7 +390,7 @@ void debug(){//{{{
 //}}}
 
 int main(){ //{{{
-	//{{{ Pre-reqs
+	//{{{ Initializing the header reading
 	modifiedURI = malloc(BUFFER);
 	int tokenCount = 0;
     printf("Content-Type: text/plain\n\n");
@@ -448,7 +449,7 @@ int main(){ //{{{
 	}
 
 	//}}}
-	ansi(1, HEIGH-2, colBG, colFG, "\n");
+	ansi(1, HEIGH-1, colBG, colFG, "\n");
 	free(modifiedURI);
 }//}}}
 
