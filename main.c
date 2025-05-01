@@ -272,15 +272,15 @@ void activeBox(int posX, int posY, int sizX, int sizY, int bg, int fg){//{{{
 
 }//}}}
 
-void basicPage(){
+void basicPage(){ //{{{
 //	ansi(2, 2, colBG, colFG, "basic page");
 	indexCard( 3, 3, 30, 21, -3, colFG);
 	//activeBox( 1, 3, 80, 21, -3, colFG);
 	
 	ranPage = 1;
-}
+} //}}}
 
-int main(){
+int main(){ //{{{
 	//{{{ Pre-reqs
 	modifiedURI = malloc(BUFFER);
 	int tokenCount = 0;
@@ -323,6 +323,10 @@ int main(){
 	while(modifiedURI != NULL){
 		if(!(strncmp(modifiedURI, "debug", 6)))
 			debug();
+		if(!(strncmp(modifiedURI, "nifur", 6))){
+			modifiedURI = strtok(NULL, "/");
+			continue;
+		}
 		tokenCount += 1;
 		modifiedURI = strtok(NULL, "/");
 	}
@@ -338,7 +342,7 @@ int main(){
 	//}}}
 	ansi(1, HEIGH-2, colBG, colFG, "\n");
 	free(modifiedURI);
-}
+}//}}}
 
 void debug(){//{{{	
 	char debugstring[BUFFER*4];
