@@ -26,6 +26,7 @@ void initProc(){ //{{{ The default displaying present on every page
 	
 	ansi(space,1, colBG, -12, host);
 	space += strlen(host);
+	//{{{ Draw URI
 	strncpy(modifiedURI, getenv("REQUEST_URI"), BUFFER); 
 	modifiedURI[BUFFER-1] = '\0';
 	modifiedURI = strtok(modifiedURI, "/");
@@ -39,8 +40,7 @@ void initProc(){ //{{{ The default displaying present on every page
 		modifiedURI = strtok(NULL, "/");
 	}
 	modifiedURI = modifiedURIp;
-//	ansi(space,1, colBG, -13, uri);
-//	space += strlen(uri);
+	//}}}
 
 	if(space < WIDTH-49)
 		ansi((WIDTH-space-20)/2 + space - 14,1,colBG, colFG, "World's most boring trannie!");
@@ -402,7 +402,7 @@ void activeBox(int posX, int posY, int sizX, int sizY, int bg, int fg){//{{{
 
 }//}}}
 
-void shoru(int posX, int posY, int bg,int fg){//{{{
+void shoru(int posX, int posY, int bg, int leftbg, int rightbg,int fg){//{{{
 	if(posX > 50 || posY > 8){
 		ansi(posX, posY, colBG,colFG,"OOBing it :c");
 		return;
@@ -451,6 +451,10 @@ void shoru(int posX, int posY, int bg,int fg){//{{{
 		ansi(posX+16, posY + 9,-102, fg, "     ");
 		ansi(posX+16, posY +10,-102, fg, "▄▄   ▀");
 		ansi(posX+21, posY +11,-102, fg, "▙");
+		ansi(posX   , posY + 7, leftbg, fg, "▗▄▄");
+		ansi(posX   , posY + 8, leftbg, fg, "▝▀▀");
+		ansi(posX+28, posY + 7,rightbg, fg, "▄▄▖");
+		ansi(posX+28, posY + 8,rightbg, fg, "▀▀▘");
 	} //}}}
 	else{ //{{{ Basic colors
 
@@ -498,12 +502,72 @@ void shoru(int posX, int posY, int bg,int fg){//{{{
 //}}}
 
 //{{{ Page Displays
+
 void basicPage(){ //{{{
-	activeBox(25, 3, 55, 15, -3, colFG);
-	shoru(1, 3, colBG, -4);
-	indexCard( 18, 15, 25, 10, -3, -3, colFG);
-	TallIndexCard( 50, 12, 27, 13, -3, -3, colFG);
-	
+	int x, y;
+
+	//{{{ activeBox
+	x = 25; y = 3;
+	activeBox(x, y, 55, 16, -3, colFG);
+	ansi(x +  7,y +  1, -3, colFG, "Hi, this is Shea, this is Shea's website!");
+	ansi(x +  7,y +  3, -3, colFG, "My current projects are: ");
+	ansi(x +  3,y +  4, -3, colFG, "→maintaining my email service set up through the");
+	ansi(x +  2,y +  5, -3, colFG, "emailwizz scripts");
+	ansi(x +  3,y +  6, -3, colFG, "→maintaining the matrix instance through synapse");
+	ansi(x +  2,y +  7, -3, colFG, "     so i may have an account on my domain");
+	ansi(x +  3,y +  8, -3, colFG, "     →maintaining the nginx server to serve these");
+	ansi(x +  2,y +  9, -3, colFG, "objects that refer to my         projects");
+	ansi(x +  3,y + 10, -3, colFG, "→creating these comfy~~           pages");
+	ansi(x +  3,y + 11, -3, colFG, "→accomodating myself w             git");
+	ansi(x +  2,y + 12, -3, colFG, "→kissin      my partner");
+
+	//}}}
+
+	shoru(1, 3, colBG, colBG, -3, -4);
+
+	//{{{ indexCard
+	x = 18;	y = 15;
+	indexCard( x, y, 25, 10, -3, -3, colFG);
+	for(int i=0; i<5; i++){
+		ansi(x+2, y+4+i, -3, -10, "$");
+		ansi(x+4, y+4+i, -3, -11, "curl");
+		ansi(x+9, y+4+i, -3, -12, "she-a.eu");
+	}
+	ansi(x+17, y+4, -3, -13, "/simple");
+	ansi(x+17, y+5, -3, -13, "/index");
+	ansi(x+17, y+6, -3, -13, "/about");
+	ansi(x+ 9, y+8, -3, -12, "sh\e[5m_     ");//}}}
+
+	//{{{ socalBox
+	x = 50; y = 12;
+	TallIndexCard( x, y, 27, 13, -3, -3, colFG);
+
+	ansi(x+ 5,y+5,-3, -95, "libera");
+	ansi(x+14,y+5,-3, -96, "/msg");
+	ansi(x+19,y+5,-3, -97, "se-a");
+
+	ansi(x+ 6,y+6,-3, -97, "email");
+	ansi(x+15,y+6,-3, -97, "nu@she-a.eu");
+	ansi(x+17,y+6,-3, -96, "@");
+
+	ansi(x+ 5,y+7,-3, -91, "matrix");
+	ansi(x+14,y+7,-3, -97, "@nu:she-a.eu");
+	ansi(x+14,y+7,-3, -96, "@");
+	ansi(x+17,y+7,-3, -96, ":");
+
+	ansi(x+ 5,y+8,-3, -10, "github");
+	ansi(x+14,y+8,-3, -97, "@nushea");
+	ansi(x+14,y+8,-3, -96, "@");
+
+	ansi(x+ 4,y+9,-3, -94, "bluesky");
+	ansi(x+14,y+9,-3, -97, "@nu.she-a.eu");
+	ansi(x+14,y+9,-3, -96, "@");
+
+	ansi(x+ 4,y+10,-3, -96, "discord");
+	ansi(x+14,y+10,-3, -97, "@.se.a");
+	ansi(x+14,y+10,-3, -96, "@");
+
+	ansi(x+3, y+11,-3, -90, "not fedi   @nu@she-a.eu");
 	ranPage = 1;
 } //}}}
 
