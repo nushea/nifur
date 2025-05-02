@@ -542,7 +542,8 @@ void basicPage(){ //{{{
 	ansi(x+17, y+4, -3, -13, "/simple");
 	ansi(x+17, y+5, -3, -13, "/index");
 	ansi(x+17, y+6, -3, -13, "/about");
-	ansi(x+ 9, y+8, -3, -12, "sh\e[5m_     ");//}}}
+	ansi(x+ 9, y+8, -3, -12, "sh      ");
+	ansi(x+11, y+8, -3, -12, "\e[5m_     ");//}}}
 
 	//{{{ socalBox
 	x = 50; y = 12;
