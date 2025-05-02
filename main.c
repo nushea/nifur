@@ -116,42 +116,42 @@ void TallIndexCard(int posX, int posY, int sizX, int sizY, int bg, int earBG, in
 		ansi(posX+2,posY + sizY-1, colBG,   fg, under);
 	}//}}}
 	else{ //{{{ simple color
-		ansi(posX+ 4,posY+ 0, colBG,   fg,     "┌───┐");
-		ansi(posX+ 1,posY+ 1, colBG,   fg,  "┌──┘   └┐");
-		ansi(posX   ,posY+ 2, colBG,   fg, "┌┘   ──┐ └");
-		ansi(posX   ,posY+ 3, colBG,   fg, "│");
-		ansi(posX+ 5,posY+ 1,    bg,   fg,  "   ");
-		ansi(posX+ 2,posY+ 2,    bg,   fg, "   ──┐ ");
+		ansi(posX+ 4,posY+ 0, colBG,   fg,     "┌────┐");
+		ansi(posX+ 2,posY+ 1, colBG,   fg,   "┌─┘    └┐");
+		ansi(posX   ,posY+ 2, colBG,   fg, "┌─┘  ──┐  │");
+		ansi(posX   ,posY+ 3, colBG,   fg, "│         └");
+		ansi(posX   ,posY+ 4, colBG,   fg, "│");
+		ansi(posX+ 5,posY+ 2,    bg,   fg,  "   ");
+		ansi(posX+ 4,posY+ 2,    bg,   fg, " ──┐ ");
 
 		int overSize = 20;
 		char over[BUFFER];
 		memset(over, 0, BUFFER);
 		strcpy(over, "─");
-		while(overSize < sizX){
+		while(overSize < sizX-2){
 			strcat(over, "─");
 			overSize+=1;
 		}
-		ansi(posX+overSize- 9,posY + 0,colBG, fg," ┌───┐");
-		ansi(posX+overSize- 9,posY + 1,colBG, fg,"┌┘   └──┐");
-		ansi(posX+overSize- 9,posY + 2,colBG, fg,"┘ ┌──   └┐");
-		ansi(posX+overSize   ,posY + 3,colBG, fg,         "│");
-		ansi(posX+overSize- 7,posY + 1,   bg, fg,"   ");
-		ansi(posX+overSize- 8,posY + 2,   bg, fg," ┌──   ");
 
-		ansi(posX+10,posY+ 2, colBG,   fg, over);
+
+		ansi(posX+overSize- 7,posY + 0,colBG, fg, "┌────┐");
+		ansi(posX+overSize- 8,posY + 1,colBG, fg,"┌┘    └─┐");
+		ansi(posX+overSize- 8,posY + 2,colBG, fg,"│ ┌──   └─┐");
+		ansi(posX+overSize- 8,posY + 3,colBG, fg,"┘         │");
+		ansi(posX+overSize   ,posY + 4,colBG, fg,         "│");
+		ansi(posX+sizX- 7,posY + 1,   bg, fg,"   ");
+		ansi(posX+sizX- 8,posY + 2,   bg, fg," ┌──  ");
+
+		ansi(posX+11,posY+ 3, colBG,   fg, over);
 
 		int ofy = 4;
 		while(ofy < sizY-2){
 			ansi(posX, posY+ ofy, colBG,   fg, "│");
-			ansi(posX+overSize, posY+ ofy, colBG,   fg, "│");
+			ansi(posX+sizX, posY+ ofy, colBG,   fg, "│");
 			ofy += 1;
 		}
-		ansi(posX, posY+ ofy, colBG,   fg, "└┐");
-		ansi(posX+overSize-1, posY+ ofy, colBG,   fg, "┌┘");
-		ansi(posX+1, posY+ ofy+1, colBG,   fg, "└");
-		ansi(posX+overSize-1, posY+ ofy+1, colBG,   fg, "┘");
 
-		int ows = 3;
+		int ows = 4;
 		char background[80];
 		memset(background, ' ', sizX-4);
 		background[sizX-4] = 0;
@@ -163,6 +163,12 @@ void TallIndexCard(int posX, int posY, int sizX, int sizY, int bg, int earBG, in
 			ansi(posX+1, posY+ows, bg,   fg, background);
 			ows+=1;
 		}
+		ansi(posX, posY+ sizY- 3, colBG,   fg, "└┐");
+		ansi(posX+sizX-1, posY+ sizY - 3, colBG,   fg, "┌┘");
+		ansi(posX+1, posY+ sizY -2, colBG,   fg, "│");
+		ansi(posX+sizX-1, posY+ sizY -2, colBG,   fg, "│");
+		ansi(posX+1, posY+ sizY-1, colBG,   fg, "└");
+		ansi(posX+sizX-1, posY+ sizY-1, colBG,   fg, "┘");
 		int underSize = 2;
 		char under[BUFFER];
 		memset(under, 0, BUFFER);
@@ -337,8 +343,8 @@ void activeBox(int posX, int posY, int sizX, int sizY, int bg, int fg){//{{{
 		background[sizX-2] = 0;
 		int ofy = 4;
 		while(ofy < sizY-4){
-			ansi(posX, posY+ ofy, bg,   colFG, "▌");
-			ansi(posX+sizX-1, posY+ ofy, bg,   colFG, "▐");
+			ansi(posX, posY+ ofy, bg,   fg, "▌");
+			ansi(posX+sizX-1, posY+ ofy, bg,   fg, "▐");
 			ansi(posX+1,posY+ ofy, bg, fg, background);
 			ofy += 1;
 		}
@@ -387,8 +393,8 @@ void activeBox(int posX, int posY, int sizX, int sizY, int bg, int fg){//{{{
 		background[sizX-2] = 0;
 		int ofy = 1;
 		while(ofy < sizY-1){
-			ansi(posX, posY+ ofy, colBG,   colFG, "│");
-			ansi(posX+sizX-1, posY+ ofy, colBG,   colFG, "│");
+			ansi(posX, posY+ ofy, colBG,   fg, "│");
+			ansi(posX+sizX-1, posY+ ofy, colBG,   fg, "│");
 			ansi(posX+1,posY+ ofy, bg, fg, background);
 			ofy += 1;
 		}	
@@ -508,7 +514,7 @@ void basicPage(){ //{{{
 
 	//{{{ activeBox
 	x = 25; y = 3;
-	activeBox(x, y, 55, 16, -3, colFG);
+	activeBox(x, y, 55, 16, -3, -5);
 	ansi(x +  7,y +  1, -3, colFG, "Hi, this is Shea, this is Shea's website!");
 	ansi(x +  7,y +  3, -3, colFG, "My current projects are: ");
 	ansi(x +  3,y +  4, -3, colFG, "→maintaining my email service set up through the");
@@ -527,7 +533,7 @@ void basicPage(){ //{{{
 
 	//{{{ indexCard
 	x = 18;	y = 15;
-	indexCard( x, y, 25, 10, -3, -3, colFG);
+	indexCard( x, y, 25, 10, -3, -3, -5);
 	for(int i=0; i<5; i++){
 		ansi(x+2, y+4+i, -3, -10, "$");
 		ansi(x+4, y+4+i, -3, -11, "curl");
@@ -540,35 +546,36 @@ void basicPage(){ //{{{
 
 	//{{{ socalBox
 	x = 50; y = 12;
-	TallIndexCard( x, y, 27, 13, -3, -3, colFG);
+	TallIndexCard( x, y, 27, 13, -3, -3, -5);
 
-	ansi(x+ 5,y+5,-3, -95, "libera");
-	ansi(x+14,y+5,-3, -96, "/msg");
+	ansi(x+ 5,y+5,-3, -20, "libera");
+	ansi(x+14,y+5,-3, -27, "/msg");
 	ansi(x+19,y+5,-3, -97, "se-a");
 
-	ansi(x+ 6,y+6,-3, -97, "email");
+	ansi(x+ 6,y+6,-3, -21, "email");
 	ansi(x+15,y+6,-3, -97, "nu@she-a.eu");
-	ansi(x+17,y+6,-3, -96, "@");
+	ansi(x+17,y+6,-3, -27, "@");
 
-	ansi(x+ 5,y+7,-3, -91, "matrix");
+	ansi(x+ 5,y+7,-3, -22, "matrix");
 	ansi(x+14,y+7,-3, -97, "@nu:she-a.eu");
-	ansi(x+14,y+7,-3, -96, "@");
-	ansi(x+17,y+7,-3, -96, ":");
+	ansi(x+14,y+7,-3, -27, "@");
+	ansi(x+17,y+7,-3, -27, ":");
 
-	ansi(x+ 5,y+8,-3, -10, "github");
+	ansi(x+ 5,y+8,-3, -23, "github");
 	ansi(x+14,y+8,-3, -97, "@nushea");
-	ansi(x+14,y+8,-3, -96, "@");
+	ansi(x+14,y+8,-3, -27, "@");
 
-	ansi(x+ 4,y+9,-3, -94, "bluesky");
+	ansi(x+ 4,y+9,-3, -24, "bluesky");
 	ansi(x+14,y+9,-3, -97, "@nu.she-a.eu");
-	ansi(x+14,y+9,-3, -96, "@");
+	ansi(x+14,y+9,-3, -27, "@");
 
-	ansi(x+ 4,y+10,-3, -96, "discord");
+	ansi(x+ 4,y+10,-3, -25, "discord");
 	ansi(x+14,y+10,-3, -97, "@.se.a");
-	ansi(x+14,y+10,-3, -96, "@");
+	ansi(x+14,y+10,-3, -27, "@");
 
-	ansi(x+3, y+11,-3, -90, "not fedi   @nu@she-a.eu");
+	ansi(x+3, y+11,-3, -26, "not fedi   @nu@she-a.eu");
 	ranPage = 1;
+	//}}}
 } //}}}
 
 void debug(){//{{{	

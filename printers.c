@@ -12,10 +12,20 @@ int colmap(int color){ //{{{
 			case   -2: return 0xcdd6f4; // default text color
 			case   -3: return 0x313244; // secondary background
 			case   -4: return 0x13131e; // mute over background
+			case   -5: return 0xb7bdf8; // mute over background
 			case  -10: return 0xa6e3a1; // Pound sign for commands
 			case  -11: return 0x89b4fa; // the literal "curl" text
 			case  -12: return 0xfab387; // the domain
 			case  -13: return 0xf38ba8; // the subdomain
+
+			case  -20: return 0xf38ba8;
+			case  -21: return 0xffffff;
+			case  -22: return 0xffd9f6;
+			case  -23: return 0xa6e3a1;
+			case  -24: return 0x89dceb;
+			case  -25: return 0xcba6f7;
+			case  -26: return 0x2e2e3e;
+			case  -27: return 0x89b4fa;
 
 			case  -30: case  -40: return 0x000000;
 			case  -31: case  -41: return 0xFF0000;
@@ -46,10 +56,20 @@ int colmap(int color){ //{{{
 			case   -1: return 40;
 			case   -2: return 97;
 			case   -4: return 90;
+			case   -5: return 91;
 			case  -10: return 32; // Pound sign for commands
 			case  -11: return 94; // the literal "curl" text
 			case  -12: return 93; // the domain
 			case  -13: return 95; // the subdomain
+
+			case  -20: return 95;
+			case  -21: return 97;
+			case  -22: return 91;
+			case  -23: return 92;
+			case  -24: return 94;
+			case  -25: return 96;
+			case  -26: return 90;
+			case  -27: return 96;
 
 			default:  return 107;
 		}
