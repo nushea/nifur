@@ -8,38 +8,39 @@ char uri[BUFFER], host[BUFFER], ip[BUFFER], * modifiedURI, * modifiedURIp;
 int ranPage = 0;
 
 //{{{ Initialization process
-void trueColorInit(){//{{{
-	for(int i=1; i<=HEIGH; i++)
-		for(int j=1; j<=WIDTH; j++)
-			if((i+j)%2)
-				truc(j, i, -1, 0xb4befe, " ");
-			else
-			 	truc(j, i, -1, 0x45475a, " ");
-}//}}}
-
-void simlColorInit(){ //{{{
-	for(int i=1; i<=HEIGH; i++)
-		for(int j=1; j<=WIDTH; j++)
-			if((i+j)%2)
-				dots(j, i, -1, 37, " ");
-			else
-			 	dots(j, i, -1, 90, " ");
-} //}}}
 
 void initProc(){ //{{{ The default displaying present on every page
 	printf("\x1b[2J");
-	if(isTrueColor)
-		trueColorInit();
-	else
-	 	simlColorInit();
+
+	char * spaces;
+	spaces = malloc(81);
+	memset(spaces, ' ', 80);
+	spaces[80] = '\0';
+	for(int i=1; i<=HEIGH; i++)
+		ansi(1, i, colBG, colFG, spaces);
+	free(spaces);
+
 	int space = 8;
 	ansi(1,1, colBG, -10, "$");
 	ansi(3,1, colBG, -11, "curl");
 	
 	ansi(space,1, colBG, -12, host);
 	space += strlen(host);
-	ansi(space,1, colBG, -13, uri);
-	space += strlen(uri);
+	strncpy(modifiedURI, getenv("REQUEST_URI"), BUFFER); 
+	modifiedURI[BUFFER-1] = '\0';
+	modifiedURI = strtok(modifiedURI, "/");
+	char temp[BUFFER];
+	while(modifiedURI != NULL){
+		if((strncmp(modifiedURI, "nifur", 6))){
+			sprintf(temp, "/%s", modifiedURI);
+			ansi(space, 1, colBG, -13, temp);
+			space += strlen(modifiedURI)+1;
+		}
+		modifiedURI = strtok(NULL, "/");
+	}
+	modifiedURI = modifiedURIp;
+//	ansi(space,1, colBG, -13, uri);
+//	space += strlen(uri);
 
 	if(space < WIDTH-49)
 		ansi((WIDTH-space-20)/2 + space - 14,1,colBG, colFG, "World's most boring trannie!");
@@ -47,6 +48,7 @@ void initProc(){ //{{{ The default displaying present on every page
 	ansi(WIDTH-20,1,colBG, colFG, "(minimum size: 80x24)");
 	printf("\x1b[%i;%iH\x1b[0\n", HEIGH, WIDTH+1);
 }//}}}
+
 //}}}
 
 //{{{ Objects that can be drawn
@@ -552,7 +554,6 @@ int main(){ //{{{
 	strncpy(modifiedURI, getenv("REQUEST_URI"), BUFFER); 
 	modifiedURI[BUFFER-1] = '\0';
 	modifiedURI = strtok(modifiedURI, "/");
-
 	while(modifiedURI != NULL){
 		if(!(strncmp(modifiedURI, "debug", 6)))
 			debug();
@@ -563,6 +564,7 @@ int main(){ //{{{
 		tokenCount += 1;
 		modifiedURI = strtok(NULL, "/");
 	}
+	modifiedURI = modifiedURIp;
 	if(!ranPage){
 		if(tokenCount<=0){
 			basicPage();
@@ -574,6 +576,6 @@ int main(){ //{{{
 
 	//}}}
 	ansi(1, HEIGH-1, colBG, colFG, "\n");
-	free(modifiedURI);
+	free(modifiedURIp);
 }//}}}
 
