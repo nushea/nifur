@@ -52,7 +52,7 @@ void initProc(){ //{{{ The default displaying present on every page
 //}}}
 
 //{{{ Objects that can be drawn
-void TallIndexCard(int posX, int posY, int sizX, int sizY, int bg, int earBG, int fg){ //{{{
+void SocialCard(int posX, int posY, int sizX, int sizY, int bg, int earBG, int fg){ //{{{
 	if(sizX < 20 || sizY < 6 || sizX+posX > 81 || sizY+posY > 25){
 		ansi(posX, posY, colBG, colFG, "indexCard sizes X:20-80 Y:7-24");
 		return;}
@@ -343,8 +343,8 @@ void activeBox(int posX, int posY, int sizX, int sizY, int bg, int fg){//{{{
 		background[sizX-2] = 0;
 		int ofy = 4;
 		while(ofy < sizY-4){
-			ansi(posX, posY+ ofy, bg,   fg, "▌");
-			ansi(posX+sizX-1, posY+ ofy, bg,   fg, "▐");
+			ansi(posX, posY+ ofy, bg,   fg, "█");
+			ansi(posX+sizX-1, posY+ ofy, bg,   fg, "█");
 			ansi(posX+1,posY+ ofy, bg, fg, background);
 			ofy += 1;
 		}
@@ -529,11 +529,29 @@ void basicPage(){ //{{{
 
 	//}}}
 
-	shoru(1, 3, colBG, colBG, -3, -4);
+	//{{{ Shoru
+	x = 1; y = 3;
+	shoru(x, y, colBG, colBG, -3, -4);
+	
+	if(isTrueColor){
+		ansi(x+24,y +  4, -5, -4, "▘");
+		ansi(x+24,y + 11, -5, -4, "▖");
+		ansi(x+24,y +  6, -5, -4, "▄");
+		ansi(x+24,y +  9, -5, -4, "▀");
+	}
+	//}}}
 
 	//{{{ indexCard
 	x = 18;	y = 15;
 	indexCard( x, y, 25, 10, -3, -3, -5);
+	if(isTrueColor){
+		ansi(x+7,15, -5, -5, "█");}
+	else{
+		ansi(x+7,15, -3, -5, "┴");
+		ansi(x+25,18, -3, -5, "├");
+	}
+	ansi(x+ 3, y+2, -3, -5, "INDEX");
+	ansi(x+18, y+2, -3, -5, "cURLs");
 	for(int i=0; i<5; i++){
 		ansi(x+2, y+4+i, -3, -10, "$");
 		ansi(x+4, y+4+i, -3, -11, "curl");
@@ -547,7 +565,16 @@ void basicPage(){ //{{{
 
 	//{{{ socalBox
 	x = 50; y = 12;
-	TallIndexCard( x, y, 27, 13, -3, -3, -5);
+	SocialCard( x, y, 27, 13, -3, -3, -5);
+	
+	if(!isTrueColor){
+		ansi(x,18, -3, -5, "┤");
+		ansi(x+27,18, -3, -5, "├");
+	}
+	ansi(x+ 4, y+2, -3, -5, "     ");
+	ansi(x+20, y+2, -3, -5, "     ");
+	ansi(x+ 2, y+3, -3, -5, "socials");
+	ansi(x+19, y+3, -3, -5, "contact");
 
 	ansi(x+ 5,y+5,-3, -20, "libera");
 	ansi(x+14,y+5,-3, -27, "/msg");
