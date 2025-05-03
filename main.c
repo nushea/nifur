@@ -304,7 +304,7 @@ void indexCard(int posX, int posY, int sizX, int sizY, int bg, int earBG, int fg
 
 void activeBox(int posX, int posY, int sizX, int sizY, int bg, int fg){//{{{
 //	ansi(posX, posY, bg, fg, "active");
-	if(sizX < 18 || sizY < 8 || sizX+posX > 81 || sizY+posY > 24){
+	if(sizX < 14 || sizY < 4 || sizX+posX > 81 || sizY+posY > 24){
 		ansi(posX, posY, colBG, colFG, "activeBox sizes X:20-80 Y:7-24");
 		return;}
 	if(isTrueColor){ //{{{
@@ -312,7 +312,6 @@ void activeBox(int posX, int posY, int sizX, int sizY, int bg, int fg){//{{{
 		ansi(posX+3,posY+ 1,    bg, fg,    "▀▀▀");
 		ansi(posX+1,posY+ 1, colBG, fg,  "▄▟");
 		ansi(posX+1,posY+ 2,    bg, fg,  "█");
-		ansi(posX  ,posY+ 3,    bg, fg, "█▀");
 		if(sizX > 18){	
 			int overSize = 18;
 			char over[BUFFER],under[BUFFER];
@@ -325,6 +324,7 @@ void activeBox(int posX, int posY, int sizX, int sizY, int bg, int fg){//{{{
 				strcat(under, "▄");
 				overSize+=1;
 			}
+
 			ansi(posX+ 9,posY, bg,   fg, over);
 			ansi(posX+ 9,posY+sizY-1, bg,   fg, under);
 		}
@@ -342,6 +342,7 @@ void activeBox(int posX, int posY, int sizX, int sizY, int bg, int fg){//{{{
 		memset(background,' ',sizX-2);
 		background[sizX-2] = 0;
 		int ofy = 4;
+		
 		while(ofy < sizY-4){
 			ansi(posX, posY+ ofy, bg,   fg, "█");
 			ansi(posX+sizX-1, posY+ ofy, bg,   fg, "█");
@@ -352,15 +353,24 @@ void activeBox(int posX, int posY, int sizX, int sizY, int bg, int fg){//{{{
 		ansi(posX+sizX- 6,posY+ 1,    bg, fg,      "▀▀▀");
 		ansi(posX+sizX- 3,posY+ 1, colBG, fg,         "▙▄");
 		ansi(posX+sizX- 2,posY+ 2,    bg, fg,          "█");
-		ansi(posX+sizX- 2,posY+ 3,    bg, fg,          "▀█");
-
-		ansi(posX   , posY+sizY- 4,   bg, fg, "█▄");
+		if(sizY > 6){
+			ansi(posX        ,posY+sizY- 4, bg, fg, "█▄");
+			ansi(posX+sizX- 2,posY+sizY- 4, bg, fg, "▄█");
+			ansi(posX        ,posY+ 3     , bg, fg, "█▀");
+		ansi(posX+sizX- 2    ,posY+ 3     , bg, fg, "▀█");
+		}
+		else{
+			ansi(posX+1        ,posY+sizY- 4, bg, fg, "█");
+			ansi(posX+sizX- 2  ,posY+sizY- 4, bg, fg, "█");
+			ansi(posX+1        ,posY+ 3     , bg, fg, "█");
+			ansi(posX+sizX- 2  ,posY+ 3     , bg, fg, "█");
+		}
+		
 		ansi(posX+ 1, posY+sizY- 3,   bg, fg,  "█");
 		ansi(posX+ 1, posY+sizY- 2,colBG, fg,  "▀");
 		ansi(posX+ 2, posY+sizY- 2,   bg, fg,   "▙▄▄▄");
 		ansi(posX+ 5, posY+sizY- 1,colBG, fg,      "▀▀▀▀");
 		
-		ansi(posX+sizX- 2,posY+sizY- 4,    bg, fg,        "▄█");
 		ansi(posX+sizX- 2,posY+sizY- 3,    bg, fg,        "█");
 	   	ansi(posX+sizX- 3,posY+sizY- 2, colBG, fg,       "▛▀");
 		ansi(posX+sizX- 6,posY+sizY- 2,    bg, fg,    "▄▄▄");
@@ -613,7 +623,7 @@ void debug(){//{{{
 	ranPage = 1;
 }//}}}
 
-void aboutPage(){
+void aboutPage(){ //{{{
 	int x, y;
 
 	//{{{ activeBox
@@ -651,7 +661,7 @@ void aboutPage(){
 	if(isTrueColor){
 		ansi(x+25,y+2, -3, -5, "▄");}
 	else{
-		ansi(x   ,18, -3, -5, "├");
+		ansi(x   ,18, -3, -5, "┤");
 		ansi(x+25,18, -3, -5, "├");
 	}
 	for(int i=0; i<5; i++){
@@ -665,13 +675,84 @@ void aboutPage(){
 	ansi(x+ 9, y+8, -3, -12, "sh      ");
 	ansi(x+11, y+8, -3, -12, "\e[5m_     ");//}}}
 
+	ranPage = 1;
+}//}}}
 
+void indexPage(){//{{{
+	int x, y;
 
+	//{{{ LEFTindexCard
+	x = 22;	y = 3;
+	indexCard( x, y, 28, 21, -3, -3, -5);
+	ansi(x+ 3, y+2, -3, -5, "INDEX");
+	ansi(x+21, y+2, -3, -5, "cURLs");
+	for(int i=0; i<16; i++){
+		ansi(x+ 4, y+4+i, -3, -10, "$");
+		ansi(x+ 6, y+4+i, -3, -11, "curl");
+		ansi(x+11, y+4+i, -3, -12, "she-a.eu");
+		ansi(x+19, y+4+i, -3, -5, "/test");
+	}
+	ansi(x+19,y+ 4, -3, -13, "     ");
+	ansi(x+19,y+ 5, -3, -13, "/index");
+	ansi(x+19,y+ 6, -3, -13, "/about");
+	ansi(x+11,y+19, -3, -12, "sh           ");
+	ansi(x+13,y+19, -3, -12, "\e[5m_");//}}}
+
+	//{{{ RIGHTindexCard
+	x = 50+isTrueColor;	y = 3;
+	indexCard( x, y, 28, 21, -3, -3, -5);
+	if(!isTrueColor){
+		ansi(x,y+2, -3, -5, "┬");
+		ansi(x,y+19, -3, -5, "┴");
+	}
+	ansi(x+ 3, y+2, -3, -5, "INDEX");
+	ansi(x+21, y+2, -3, -5, "cURLs");
+	for(int i=0; i<16; i++){
+		ansi(x+ 4, y+4+i, -3, -10, "$");
+		ansi(x+ 6, y+4+i, -3, -11, "curl");
+		ansi(x+11, y+4+i, -3, -12, "she-a.eu");
+		ansi(x+19, y+4+i, -3, -5, "/s/test");
+	}
+	ansi(x+19,y+ 4, -3, -13, "/s     ");
+	ansi(x+19,y+ 5, -3, -13, "/s/index");
+	ansi(x+19,y+ 6, -3, -13, "/s/about");
+	ansi(x+11,y+19, -3, -12, "sh             ");
+	ansi(x+13,y+19, -3, -12, "\e[5m_");//}}}
+
+	//{{{ Active box
+	x = 1; y = 18;
+	activeBox(x, y, 22, 6, -3, -5);
+	if(!isTrueColor){
+		ansi(x+21, y , -3, -5, "┤");
+		ansi(x+21,y+4, -3, -5, "├");
+	}
+	ansi(x+10,y+1, -3, -5, "Hi,");
+	ansi(x+4, y+2, -3, -5, "You can add /s/");
+	ansi(x+4, y+3, -3, -5, "to any link you");
+	ansi(x+7, y+4, -3, -5, "may want");
+	//}}}
+
+	//{{{ Shoru
+	x = 1; y = 3;
+	shoru(x, y, colBG, colBG, -3, -4);
+	
+	if(isTrueColor){
+		ansi(x+24,y +  4, -3, -4, "▘");
+		ansi(x+24,y + 11, -3, -4, "▖");
+		ansi(x+24,y +  6, -3, -4, "▄");
+		ansi(x+24,y +  9, -3, -4, "▀");
+		ansi(x+23,y +  6, -3, -4, "▄");
+		ansi(x+23,y +  9, -3, -4, "▀");
+		ansi(x+22,y +  6, -3, -4, "▄");
+		ansi(x+22,y +  9, -3, -4, "▀");
+	}
+	//}}}
 	ranPage = 1;
 }
 
 //}}}
 
+//}}}
 
 int main(){ //{{{
 	//{{{ Initializing the header reading
@@ -715,6 +796,8 @@ int main(){ //{{{
 	while(modifiedURI != NULL){
 		if(!(strncmp(modifiedURI, "debug", 6)))
 			debug();
+		if(!(strncmp(modifiedURI, "index", 5)))
+			indexPage();
 		if(!(strncmp(modifiedURI, "about", 5)))
 			aboutPage();
 		if(!(strncmp(modifiedURI, "nifur", 6))){
