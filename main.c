@@ -612,7 +612,66 @@ void debug(){//{{{
 	ansi(1, HEIGH-2, colBG, colFG, debugstring);
 	ranPage = 1;
 }//}}}
+
+void aboutPage(){
+	int x, y;
+
+	//{{{ activeBox
+	x = 25; y = 3;
+	activeBox(x, y, 55, 16, -3, -5);
+	ansi(x + 18,y +  1, -3, colFG, "Hi, this is Shea!!");
+	ansi(x +  7,y +  3, -3, colFG, "I'm just a little girl of 22 years old that");
+	ansi(x +  3,y +  4, -3, colFG, "likes doing all kinda unrelated stuff.");
+	ansi(x +  3,y +  6, -3, colFG, "For one i know basic crochet and have rudimentary");
+	ansi(x +  2,y +  7, -3, colFG, "     drawing skills, and know how to solve some");
+	ansi(x +  2,y +  8, -3, colFG, "     rubix cubes like the 3x3, mirror and the skewb");
+	ansi(x +  3,y +  9, -3, colFG, "I am like 1000ELO in chess and like plaing it on");
+	ansi(x +  3,y + 10, -3, colFG, "long train rides.");
+	ansi(x +  3,y + 11, -3, colFG, "I am part of the CYRA worldbuilding project altho");
+	ansi(x +  5,y + 12, -3, colFG, "i need to participate          more        at it");
+	ansi(x +  3,y + 13, -3, colFG, "I cant wait to live w             my            gf");
+
+	//}}}
+
+	//{{{ Shoru
+	x = 1; y = 3;
+	shoru(x, y, colBG, colBG, -3, -4);
+	
+	if(isTrueColor){
+		ansi(x+24,y +  4, -5, -4, "▘");
+		ansi(x+24,y + 11, -5, -4, "▖");
+		ansi(x+24,y +  6, -5, -4, "▄");
+		ansi(x+24,y +  9, -5, -4, "▀");
+	}
+	//}}}
+
+	//{{{ indexCard
+	x = 50;	y = 15;
+	indexCard( x, y, 25, 10, -3, -3, -5);
+	if(isTrueColor){
+		ansi(x+25,y+2, -3, -5, "▄");}
+	else{
+		ansi(x   ,18, -3, -5, "├");
+		ansi(x+25,18, -3, -5, "├");
+	}
+	for(int i=0; i<5; i++){
+		ansi(x+2, y+4+i, -3, -10, "$");
+		ansi(x+4, y+4+i, -3, -11, "curl");
+		ansi(x+9, y+4+i, -3, -12, "she-a.eu");
+	}
+	ansi(x+17, y+4, -3, -13, "/simple");
+	ansi(x+17, y+5, -3, -13, "/index");
+	ansi(x+17, y+6, -3, -13, "/about");
+	ansi(x+ 9, y+8, -3, -12, "sh      ");
+	ansi(x+11, y+8, -3, -12, "\e[5m_     ");//}}}
+
+
+
+	ranPage = 1;
+}
+
 //}}}
+
 
 int main(){ //{{{
 	//{{{ Initializing the header reading
@@ -656,6 +715,8 @@ int main(){ //{{{
 	while(modifiedURI != NULL){
 		if(!(strncmp(modifiedURI, "debug", 6)))
 			debug();
+		if(!(strncmp(modifiedURI, "about", 5)))
+			aboutPage();
 		if(!(strncmp(modifiedURI, "nifur", 6))){
 			modifiedURI = strtok(NULL, "/");
 			continue;
