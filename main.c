@@ -752,6 +752,65 @@ void indexPage(){//{{{
 
 //}}}
 
+void PNFPage(){ //{{{
+	int x, y;
+	//{{{ Shoru
+	x = 1; y = 3;
+	shoru(x, y, colBG, colBG, colBG, -4);
+	
+	//}}}
+
+	//{{{ indexCard
+	x = 52;	y = 15;
+	indexCard( x, y, 25, 10, -3, -3, -5);
+	for(int i=0; i<5; i++){
+		ansi(x+2, y+4+i, -3, -10, "$");
+		ansi(x+4, y+4+i, -3, -11, "curl");
+		ansi(x+9, y+4+i, -3, -12, "she-a.eu");
+	}
+	ansi(x+17, y+4, -3, -13, "/simple");
+	ansi(x+17, y+5, -3, -13, "/index");
+	ansi(x+17, y+6, -3, -13, "/about");
+	ansi(x+ 9, y+8, -3, -12, "sh      ");
+	ansi(x+11, y+8, -3, -12, "\e[5m_     ");
+	//}}}
+	//{{{ Draw the cat ears
+	x = 29; y = 3;
+	ansi(x + 2,y     , colBG, colFG,   "█▀▀▀▀▄▄             ▄▄▀▀▀█");
+	ansi(x + 1,y +  1, colBG, colFG,  "▄▀     ▀█▄        ▄█▀     ▀▄");
+	ansi(x + 1,y +  2, colBG, colFG,  "█        █        █        █");
+	ansi(x    ,y +  3, colBG, colFG, "█       ▄████████████▄       █");
+	ansi(x    ,y +  4, colBG, colFG, "█     ▄█▀            ▀█▄     █");
+	ansi(x + 1,y +  5, colBG, colFG,  "█▄  ▄▀                ▀▄  ▄█");
+	ansi(x + 2,y +  6, colBG, colFG,   "▀▀█                    █▀▀");
+	ansi(x + 3,y +  7, colBG, colFG,    "█                      █");
+	ansi(x + 3,y +  8, colBG, colFG,    "█      ERROR: 404      █");
+	ansi(x + 3,y +  9, colBG, colFG,    "█    Page not found    █");
+	ansi(x + 3,y + 10, colBG, colFG,    "█                      █");
+	ansi(x + 4,y + 11, colBG, colFG,     "█                    █");
+	ansi(x + 5,y + 12, colBG, colFG,      "▀▄                ▄▀");
+	ansi(x + 6,y + 13, colBG, colFG,       "▀█▄            ▄█▀");
+
+	
+	ansi(x+10, y+8, colBG, colFG,            "ERROR: 404");
+	ansi(x+ 8, y+9, colBG, colFG,          "Page not found");
+	ansi(67, 4, colBG, colFG,        "Sorry,");
+	ansi(60, 5, colBG, colFG, "idk where i put this");
+	ansi(68, 6, colBG, colFG,         "~^~");
+
+
+//	ansi(34, 7, colBG, colFG, "Sorry, idk where i put this page ~^~ ");
+//	ansi(45, 9, colBG, colFG,            "ERROR: 404");
+//	ansi(43,10, colBG, colFG,          "Page not found");
+
+	//}}}
+
+
+	ansi(11,20, colBG, colFG,"You might want to go to one of these ->");
+
+} //}}}
+
+
 //}}}
 
 int main(){ //{{{
@@ -813,7 +872,7 @@ int main(){ //{{{
 			basicPage();
 		}
 		else{
-			ansi(2, 2, colBG, colFG, "himitsu :3");
+			PNFPage();
 		}
 	}
 
