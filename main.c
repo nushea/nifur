@@ -182,25 +182,25 @@ void SocialCard(int posX, int posY, int sizX, int sizY, int bg, int earBG, int f
 	} //}}}
 } //}}}
 
-void indexCard(int posX, int posY, int sizX, int sizY, int bg, int earBG, int fg){ //{{{
+void indexCard(int posX, int posY, int sizX, int sizY, int bg, int LearBG, int RearBG, int fg){ //{{{
 	if(sizX < 20 || sizY < 6 || sizX+posX > 81 || sizY+posY > 25){
 		ansi(posX, posY, colBG, colFG, "indexCard sizes X:20-80 Y:7-24");
 		return;}
 
 	if(isTrueColor){ //{{{
-		ansi(posX+ 5,posY+ 0, earBG,   fg,      "▄▄▄▄");
-		ansi(posX+ 2,posY+ 1, earBG,   fg,   "▄▟▀▀  ▝▌");
+		ansi(posX+ 5,posY+ 0, LearBG,   fg,      "▄▄▄▄");
+		ansi(posX+ 2,posY+ 1, LearBG,   fg,   "▄▟▀▀  ▝▌");
 		ansi(posX+ 4,posY+ 1,    bg,   fg,     "▀▀  ▝");
-		ansi(posX   ,posY+ 2, earBG,   fg, "▗▛▘  ──┐ ▙");
+		ansi(posX   ,posY+ 2, LearBG,   fg, "▗▛▘  ──┐ ▙");
 		ansi(posX+ 1,posY+ 2,    bg,   fg,  "▛▘  ──┐ ");
-		ansi(posX   ,posY+ 3, earBG,   fg, "▟");
+		ansi(posX   ,posY+ 3, LearBG,   fg, "▟");
 
-		ansi(posX+sizX- 8,posY + 0, earBG, fg, "▄▄▄▄");
-		ansi(posX+sizX- 9,posY + 1, earBG, fg,"▐▘  ▀▀▙▄");
+		ansi(posX+sizX- 8,posY + 0, RearBG, fg, "▄▄▄▄");
+		ansi(posX+sizX- 9,posY + 1, RearBG, fg,"▐▘  ▀▀▙▄");
 		ansi(posX+sizX- 8,posY + 1,    bg, fg, "▘  ▀▀");
-		ansi(posX+sizX- 9,posY + 2, earBG, fg,"▟ ┌──  ▝▜▖");
+		ansi(posX+sizX- 9,posY + 2, RearBG, fg,"▟ ┌──  ▝▜▖");
 		ansi(posX+sizX- 8,posY + 2,    bg, fg," ┌──  ▝▜");
-		ansi(posX+sizX   ,posY + 3, earBG, fg,        "▙");
+		ansi(posX+sizX   ,posY + 3, RearBG, fg,        "▙");
 
 		int overSize = 20;
 		char over[BUFFER];
@@ -210,7 +210,7 @@ void indexCard(int posX, int posY, int sizX, int sizY, int bg, int earBG, int fg
 			strcat(over, "▄");
 			overSize+=1;
 		}
-		ansi(posX+10,posY+ 2, earBG,   fg, over);
+		ansi(posX+10,posY+ 2, RearBG,   fg, over);
 
 		int ofy = 3;
 		char background[80];
@@ -553,9 +553,12 @@ void basicPage(){ //{{{
 
 	//{{{ indexCard
 	x = 18;	y = 15;
-	indexCard( x, y, 25, 10, -3, -3, -5);
+	indexCard( x, y, 25, 10, -3, colBG, -3, -5);
 	if(isTrueColor){
-		ansi(x+7,15, -5, -5, "█");}
+		ansi(x+7,15, -5, -5, "█");
+		ansi(x+9,16, -3, -5, "▌");
+		ansi(x+9,17, -3, -5, "▙");
+	}
 	else{
 		ansi(x+7,15, -3, -5, "┴");
 		ansi(x+25,18, -3, -5, "├");
@@ -657,7 +660,7 @@ void aboutPage(){ //{{{
 
 	//{{{ indexCard
 	x = 50;	y = 15;
-	indexCard( x, y, 25, 10, -3, -3, -5);
+	indexCard( x, y, 25, 10, -3, -3, -3, -5);
 	if(isTrueColor){
 		ansi(x+25,y+2, -3, -5, "▄");}
 	else{
@@ -683,7 +686,7 @@ void indexPage(){//{{{
 
 	//{{{ LEFTindexCard
 	x = 22;	y = 3;
-	indexCard( x, y, 28, 21, -3, -3, -5);
+	indexCard( x, y, 28, 21, -3, colBG, colBG, -5);
 	ansi(x+ 3, y+2, -3, -5, "INDEX");
 	ansi(x+21, y+2, -3, -5, "cURLs");
 	for(int i=0; i<16; i++){
@@ -700,7 +703,7 @@ void indexPage(){//{{{
 
 	//{{{ RIGHTindexCard
 	x = 50+isTrueColor;	y = 3;
-	indexCard( x, y, 28, 21, -3, -3, -5);
+	indexCard( x, y, 28, 21, -3, colBG, colBG, -5);
 	if(!isTrueColor){
 		ansi(x,y+2, -3, -5, "┬");
 		ansi(x,y+19, -3, -5, "┴");
@@ -762,7 +765,7 @@ void PNFPage(){ //{{{
 
 	//{{{ indexCard
 	x = 52;	y = 15;
-	indexCard( x, y, 25, 10, -3, -3, -5);
+	indexCard( x, y, 25, 10, -3, colBG, colBG, -5);
 	for(int i=0; i<5; i++){
 		ansi(x+2, y+4+i, -3, -10, "$");
 		ansi(x+4, y+4+i, -3, -11, "curl");
@@ -776,20 +779,20 @@ void PNFPage(){ //{{{
 	//}}}
 	//{{{ Draw the cat ears
 	x = 29; y = 3;
-	ansi(x + 2,y     , colBG, colFG,   "█▀▀▀▀▄▄             ▄▄▀▀▀█");
-	ansi(x + 1,y +  1, colBG, colFG,  "▄▀     ▀█▄        ▄█▀     ▀▄");
-	ansi(x + 1,y +  2, colBG, colFG,  "█        █        █        █");
-	ansi(x    ,y +  3, colBG, colFG, "█       ▄████████████▄       █");
-	ansi(x    ,y +  4, colBG, colFG, "█     ▄█▀            ▀█▄     █");
-	ansi(x + 1,y +  5, colBG, colFG,  "█▄  ▄▀                ▀▄  ▄█");
-	ansi(x + 2,y +  6, colBG, colFG,   "▀▀█                    █▀▀");
-	ansi(x + 3,y +  7, colBG, colFG,    "█                      █");
-	ansi(x + 3,y +  8, colBG, colFG,    "█      ERROR: 404      █");
-	ansi(x + 3,y +  9, colBG, colFG,    "█    Page not found    █");
-	ansi(x + 3,y + 10, colBG, colFG,    "█                      █");
-	ansi(x + 4,y + 11, colBG, colFG,     "█                    █");
-	ansi(x + 5,y + 12, colBG, colFG,      "▀▄                ▄▀");
-	ansi(x + 6,y + 13, colBG, colFG,       "▀█▄            ▄█▀");
+	ansi(x + 2,y     , colBG, -5,   "█▀▀▀▀▄▄             ▄▄▀▀▀█");
+	ansi(x + 1,y +  1, colBG, -5,  "▄▀     ▀█▄        ▄█▀     ▀▄");
+	ansi(x + 1,y +  2, colBG, -5,  "█        █        █        █");
+	ansi(x    ,y +  3, colBG, -5, "█       ▄████████████▄       █");
+	ansi(x    ,y +  4, colBG, -5, "█     ▄█▀            ▀█▄     █");
+	ansi(x + 1,y +  5, colBG, -5,  "█▄  ▄▀                ▀▄  ▄█");
+	ansi(x + 2,y +  6, colBG, -5,   "▀▀█                    █▀▀");
+	ansi(x + 3,y +  7, colBG, -5,    "█                      █");
+	ansi(x + 3,y +  8, colBG, -5,    "█      ERROR: 404      █");
+	ansi(x + 3,y +  9, colBG, -5,    "█    Page not found    █");
+	ansi(x + 3,y + 10, colBG, -5,    "█                      █");
+	ansi(x + 4,y + 11, colBG, -5,     "█                    █");
+	ansi(x + 5,y + 12, colBG, -5,      "▀▄                ▄▀");
+	ansi(x + 6,y + 13, colBG, -5,       "▀█▄            ▄█▀");
 
 	
 	ansi(x+10, y+8, colBG, colFG,            "ERROR: 404");
