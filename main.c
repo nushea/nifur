@@ -42,8 +42,8 @@ void initProc(){ //{{{ The default displaying present on every page
 	modifiedURI = modifiedURIp;
 	//}}}
 
-	if(space < WIDTH-49)
-		ansi((WIDTH-space-20)/2 + space - 14,1,colBG, colFG, "World's most boring trannie!");
+	if(space < WIDTH-43)
+		ansi((WIDTH-space-20)/2 + space - 11,1,colBG, colFG, "Shea scented lavander!");
 	
 	ansi(WIDTH-20,1,colBG, colFG, "(minimum size: 80x24)");
 	printf("\x1b[%i;%iH\x1b[0\n", HEIGH, WIDTH+1);
