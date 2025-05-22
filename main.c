@@ -633,7 +633,7 @@ void aboutPage(){ //{{{
 	x = 25; y = 3;
 	activeBox(x, y, 55, 16, -3, -5);
 	ansi(x + 18,y +  1, -3, colFG, "Hi, this is Shea!!");
-	ansi(x +  7,y +  3, -3, colFG, "I'm just a little girl of 22 years old that");
+	ansi(x +  7,y +  3, -3, colFG, "I'm just a little girl of 23 years old that");
 	ansi(x +  3,y +  4, -3, colFG, "likes doing all kinda unrelated stuff.");
 	ansi(x +  3,y +  6, -3, colFG, "For one i know basic crochet and have rudimentary");
 	ansi(x +  2,y +  7, -3, colFG, "     drawing skills, and know how to solve some");
