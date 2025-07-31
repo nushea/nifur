@@ -2,6 +2,8 @@ all:
 	rm nifur || true
 	gcc -o nifur main.c printers.c
 
+get-ip: all
+	SERVER_NAME="she-a.eu" REQUEST_URI="/get-ip" REMOTE_ADDR="127.0.0.1" ./nifur
 test: all
 	SERVER_NAME="she-a.eu" REQUEST_URI="/path/subpath" REMOTE_ADDR="127.0.0.1" ./nifur
 test-basic: all
